@@ -23,6 +23,7 @@ const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-poppins",
 });
+
 export default function RootLayout({
   children,
 }: {

@@ -18,9 +18,57 @@ export interface Player {
   name: string;
   nationality: string;
   price: number;
-  lane: lanes;
   otp?: string;
+  lane: lanes;
   profile_image?: string;
+  stats?: Stats;
 }
+export interface UserTeam {
+  user_team_name: string;
+  user_team: Array<TeamMembers>;
+  ballance: number;
+  transfers: number;
+  overcharge: number;
+  cards: Cards;
+  total_points: number;
+  week_points: number;
+  week: number;
+  player_points?: Array<PlayerPoints>;
+}
+type Stats = {
+  kill: number;
+  death: number;
+  assist: number;
+  cs: number;
+  ward: number;
+  points: number;
+};
+type TeamMembers = {
+  name: string;
+  nationality: string;
+  price: number;
+  otp?: string;
+  lane: lanes;
+  profile_image?: string;
+};
+type Cards = {
+  triple_captin: number;
+  triple_captin_status: boolean;
+  allin: number;
+  allin_status: boolean;
+  team_fan: number;
+  team_fan_status: boolean;
+  wild_card: number;
+  wild_card_status: boolean;
+};
+type PlayerPoints = {
+  week: number;
+  kill: number;
+  death: number;
+  assist: number;
+  cs: number;
+  ward: number;
+  points: number;
+};
 
 export type lanes = "TOP" | "JG" | "BOT" | "SUP" | "MID";

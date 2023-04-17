@@ -15,7 +15,10 @@ const TeamPreview = () => {
       <div className="flex flex-col gap-4">
         {team.players.map((value, id) => {
           return (
-            <div className="flex gap-4 font-bold drop-shadow-md bg-gray-50 p-4">
+            <div
+              key={id}
+              className="flex gap-4 font-bold drop-shadow-md bg-gray-50 p-4"
+            >
               <h1>{value.name}</h1>
               <h1>{value.nationality}</h1>
               <h1>{value.otp}</h1>

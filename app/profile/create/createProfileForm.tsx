@@ -11,7 +11,7 @@ const CreateProfileForm = () => {
   const [createProfile, {}] = useCreateProfileMutation();
 
   const onSubmit = handleSubmit((data) => {
-    data.favorite_team = "";
+    data.favorite_team = "none";
     createProfile(data);
   });
 

@@ -7,7 +7,13 @@ import { Profile } from "@/types";
 export async function GET() {
   const session = await getServerSession(authOptions);
   if (session?.user) {
-    return new Response(`${session.user.id}`);
+    const queryProfile = await FIREBASE_SERVER_STORE.collection("profile")
+      .doc(session.user.id)
+      .get();
+    const data = queryProfile.data();
+    return new Response(JSON.stringify({ data }), {
+      status: 200,
+    });
   } else {
     // Return Unahorized
     return new Response("");
@@ -26,17 +32,19 @@ export async function POST(req: Request) {
       .doc(session.user.id)
       .set(bodyValues)
       .then((value) => {
-        return new Response(JSON.stringify({ data: { value } }), {
+        return new Response(JSON.stringify({ data: {} }), {
           status: 201,
         });
       })
       .catch((error) => {
-        return new Response(JSON.stringify({ data: { error } }), {
+        return new Response(JSON.stringify({ data: {} }), {
           status: 403,
         });
       });
   } else {
     // Return Unahorized
-    return new Response("");
+    return new Response(JSON.stringify({ data: {} }), {
+      status: 403,
+    });
   }
 }

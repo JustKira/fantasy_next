@@ -9,12 +9,18 @@ import NextAuth, { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { FIREBASE_CLIENT } from "@/services/FirebaseClient";
 import { AdapterUser } from "next-auth/adapters";
+import { Roles } from "@/types";
 declare module "next-auth" {
   /**
    * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
    */
   interface Session {
-    user: AdapterUser;
+    user: {
+      email: string;
+      id: string;
+      name: string;
+      role: Roles;
+    };
   }
 }
 
@@ -37,7 +43,9 @@ export const authOptions: AuthOptions = {
       // if (session?.user) {
       //   session.user = token;
       // }
-      session.user = user;
+      session.user.email = user.email;
+      session.user.name = user.name || "";
+      session.user.id = user.id;
       return session;
     },
   },

@@ -14,10 +14,10 @@ export const profileApi = createApi({
       providesTags: ["PROFILE"],
     }),
     createProfile: builder.mutation<Profile, Profile>({
-      query: (nickname) => ({
+      query: (profile) => ({
         url: "api/profile",
         method: "POST",
-        body: nickname,
+        body: profile,
       }),
       invalidatesTags: ["PROFILE"],
     }),

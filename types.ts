@@ -7,3 +7,7 @@ export interface Profile {
 }
 
 export type Roles = "ADMIN" | "USER";
+
+export interface Teams {
+  teams: Array<string>;
+}

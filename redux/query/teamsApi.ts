@@ -1,4 +1,4 @@
-import { Teams } from "@/types";
+import { Team } from "@/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const teamsApi = createApi({
@@ -6,14 +6,14 @@ export const teamsApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/" }),
   tagTypes: ["TEAMS"],
   endpoints: (builder) => ({
-    getTeams: builder.query<{ data: Teams }, void>({
+    getTeams: builder.query<{ data: Array<Team> }, void>({
       query: () => ({
         url: "api/teams",
         method: "GET",
       }),
       providesTags: ["TEAMS"],
     }),
-    createUpdateTeam: builder.mutation<Teams, Teams>({
+    createUpdateTeam: builder.mutation<Array<Team>, Array<Team>>({
       query: (teams) => ({
         url: "api/teams",
         method: "POST",

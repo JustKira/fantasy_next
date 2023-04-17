@@ -70,4 +70,5 @@ type PlayerPoints = {
   ward: number;
   points: number;
 };
+
 export type lanes = "TOP" | "JG" | "BOT" | "SUP" | "MID";

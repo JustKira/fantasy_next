@@ -1,46 +1,41 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Input from "@/components/css/Input";
-import { useCreateProfileMutation } from "@/redux/query/profileApi";
-import { Profile, Teams } from "@/types";
+
 import { useForm } from "react-hook-form";
 import Button from "@/components/css/button";
 import {
   useCreateUpdateTeamMutation,
   useGetTeamsQuery,
 } from "@/redux/query/teamsApi";
+import { useDispatch } from "react-redux";
+import { setTeamName } from "@/redux/slice/teamFormSlice";
 
 const CreateTeamForm = () => {
-  const { register, handleSubmit } = useForm<{ teamName: string }>();
+  const { register, handleSubmit, watch } = useForm<{
+    team_name: string;
+  }>();
 
-  const { data: teamsData, isLoading } = useGetTeamsQuery();
-  const [createTeam, {}] = useCreateUpdateTeamMutation();
+  const dispatch = useDispatch();
 
-  if (isLoading) {
-    return <>Loading</>;
-  }
-  console.log(teamsData);
-  const onSubmit = handleSubmit((data) => {
-    if (teamsData?.data.teams) {
-      const clonedTeam = [...teamsData?.data.teams];
-      clonedTeam.push(data.teamName.valueOf());
-      createTeam({ teams: clonedTeam });
-    } else {
-      const newTeamArray: Teams = { teams: [] };
-      newTeamArray.teams.push(data.teamName.valueOf());
-      createTeam({ teams: newTeamArray.teams });
-    }
-  });
-
+  const onSubmit = handleSubmit((data) => {});
+  useEffect(() => {
+    const subscription = watch((data) => {
+      if (data?.team_name) dispatch(setTeamName(data.team_name));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-4">
-      <Input
-        placeholder="Name"
-        type="text"
-        {...register("teamName", { required: true })}
-      />
-      <Button type="submit">Submit</Button>
-    </form>
+    <>
+      <h1 className="font-black uppercase text-3xl">TEAM</h1>
+      <form onSubmit={onSubmit} className="flex flex-col gap-4">
+        <Input
+          placeholder="team name"
+          type="text"
+          {...register("team_name", { required: true })}
+        />
+      </form>
+    </>
   );
 };
 

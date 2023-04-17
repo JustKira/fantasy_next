@@ -1,5 +1,5 @@
+import { Profile } from "@/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Profile } from "next-auth";
 
 export const profileApi = createApi({
   reducerPath: "profileApi",
@@ -13,5 +13,14 @@ export const profileApi = createApi({
       }),
       providesTags: ["PROFILE"],
     }),
+    createProfile: builder.mutation<Profile, Profile>({
+      query: (nickname) => ({
+        url: "api/profile",
+        method: "POST",
+        body: nickname,
+      }),
+      invalidatesTags: ["PROFILE"],
+    }),
   }),
 });
+export const { useGetProfileQuery, useCreateProfileMutation } = profileApi;

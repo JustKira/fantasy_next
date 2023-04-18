@@ -71,4 +71,4 @@ type PlayerPoints = {
   points: number;
 };
 
-export type lanes = "TOP" | "JG" | "MID" | "BOT" | "SUB";
+export type lanes = "TOP" | "JG" | "MID" | "BOT" | "SUP";

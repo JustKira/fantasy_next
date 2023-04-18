@@ -19,7 +19,7 @@ export const laneOptions: { value: lanes; label: string }[] = [
 ];
 
 const AddPlayerForm = () => {
-  const { register, handleSubmit, control } = useForm<Player>({});
+  const { register, handleSubmit, control} = useForm<Player>({});
 
   const dispatch = useDispatch();
   const onSubmit = handleSubmit((data) => {

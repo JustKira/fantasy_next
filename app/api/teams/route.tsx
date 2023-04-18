@@ -27,44 +27,17 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  try {
-    const bodyValues: Team = await req.json();
-    const query = await FIREBASE_SERVER_STORE.collection("teams")
-      .doc("s1")
-      .get();
-    const { teams } = query.data() as {
-      teams: Array<Team>;
-    };
-    if (teams.length > 0) {
-      teams.push(bodyValues);
+  const bodyValues: { teams: Team[] } = await req.json();
+  console.log(bodyValues);
 
-      await FIREBASE_SERVER_STORE.collection("teams")
-        .doc("s1")
-        .set({ teams: teams });
-      return new Response(
-        JSON.stringify({
-          res: { data: teams, message: "Successfully added team" },
-        }),
-        {
-          status: 200,
-        }
-      );
-    } else {
-      await FIREBASE_SERVER_STORE.collection("teams")
-        .doc("s1")
-        .set({ teams: new Array(bodyValues) });
-      return new Response(
-        JSON.stringify({
-          res: { data: bodyValues, message: "Successfully added team" },
-        }),
-        {
-          status: 200,
-        }
-      );
-    }
+  try {
+    await FIREBASE_SERVER_STORE.collection("teams").doc("s1").set(bodyValues);
+    return new Response(JSON.stringify({ data: {} }), {
+      status: 200,
+    });
   } catch (error) {
     return new Response(
-      JSON.stringify({ data: { message: "Something went wrong" }, error }),
+      JSON.stringify({ data: { message: "Something went wrong" } }),
       {
         status: 400,
       }

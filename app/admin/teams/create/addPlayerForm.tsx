@@ -1,6 +1,7 @@
 "use client";
 import Input from "@/components/css/Input";
 import Button from "@/components/css/button";
+import Select from "@/components/css/selector";
 import { addPlayer } from "@/redux/slice/teamFormSlice";
 import { Player, lanes } from "@/types";
 import { numberToText, textToNumber } from "@/utils/MoneyConverter";
@@ -55,14 +56,14 @@ const AddPlayerForm = () => {
         control={control}
         rules={{ required: true }}
         render={({ field }) => (
-          <select {...field}>
+          <Select {...field}>
             <option value="">Select a lane</option>
             {laneOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
-          </select>
+          </Select>
         )}
       />
       <Button type="submit">Add Player</Button>

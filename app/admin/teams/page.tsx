@@ -1,22 +1,12 @@
-"use client";
 import React from "react";
-import CreateTeamForm from "./createTeamForm";
-import AddPlayerForm from "./addPlayerForm";
-import TeamPreview from "./teamPreview";
-import { useCreateUpdateTeamMutation } from "@/redux/query/teamsApi";
+import RenderTeams from "./renderTeams";
 
-const Page = () => {
-  const [createUpdateTeam, {}] = useCreateUpdateTeamMutation();
-
+const pages = () => {
   return (
     <div className="flex h-screen justify-between items-center px-12">
-      <div className="flex flex-col gap-4">
-        <CreateTeamForm />
-        <AddPlayerForm />
-      </div>
-      <TeamPreview />
+      <RenderTeams />
     </div>
   );
 };
 
-export default Page;
+export default pages;

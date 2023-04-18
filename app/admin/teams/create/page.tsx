@@ -8,14 +8,16 @@ import {
   useGetTeamsQuery,
 } from "@/redux/query/teamsApi";
 import Button from "@/components/css/button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import RenderTeams from "../renderTeams";
+import { resetTeamForm } from "@/redux/slice/teamFormSlice";
 
 const Page = () => {
   const teamForm = useSelector((state: RootState) => state.teamForm);
   const [createUpdateTeam, {}] = useCreateUpdateTeamMutation();
   const { data: teamsData, isLoading } = useGetTeamsQuery();
+  const dispatch=useDispatch()
   const submitTeam = () => {
     if (teamsData?.data.teams) {
       const _team = [...teamsData?.data.teams];
@@ -24,6 +26,7 @@ const Page = () => {
     } else {
       createUpdateTeam({ teams: new Array(teamForm) });
     }
+    dispatch(resetTeamForm())
   };
 
   if (isLoading) {

@@ -10,7 +10,7 @@ const Navbar = () => {
     <nav className="fixed flex justify-between top-0 w-full bg-endless-white drop-shadow-md p-4 text-black">
       <div>LOGO</div>
       <ul className="flex gap-2 uppercase">
-        {profileData?.data.role === "ADMIN" ? (
+        {profileData?.data?.role === "ADMIN" ? (
           <li>
             <Link className="font-bold" href={"/admin/teams"}>
               admin

@@ -26,13 +26,13 @@ export interface Player {
 export interface UserTeam {
   user_team_name: string;
   user_team: Array<TeamMembers>;
-  ballance: number;
-  transfers: number;
-  overcharge: number;
+  ballance?: number;
+  transfers?: number;
+  overcharge?: number;
   cards: Cards;
-  total_points: number;
-  week_points: number;
-  week: number;
+  total_points?: number;
+  week_points?: number;
+  week?: number;
   player_points?: Array<PlayerPoints>;
 }
 type Stats = {
@@ -43,14 +43,14 @@ type Stats = {
   ward: number;
   points: number;
 };
-type TeamMembers = {
+export interface TeamMembers {
   name: string;
   nationality: string;
   price: number;
   otp?: string;
   lane: lanes;
   profile_image?: string;
-};
+}
 type Cards = {
   triple_captin: number;
   triple_captin_status: boolean;
@@ -71,4 +71,4 @@ type PlayerPoints = {
   points: number;
 };
 
-export type lanes = "TOP" | "JG" | "BOT" | "SUP" | "MID";
+export type lanes = "TOP" | "JG" | "MID" | "BOT" | "SUB";

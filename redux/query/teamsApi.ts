@@ -13,11 +13,11 @@ export const teamsApi = createApi({
       }),
       providesTags: ["TEAMS"],
     }),
-    createUpdateTeam: builder.mutation<Array<Team>, Array<Team>>({
-      query: (teams) => ({
+    createUpdateTeam: builder.mutation<Team, Array<Team>>({
+      query: (team) => ({
         url: "api/teams",
         method: "POST",
-        body: teams,
+        body: team,
       }),
       invalidatesTags: ["TEAMS"],
     }),

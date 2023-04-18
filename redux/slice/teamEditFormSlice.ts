@@ -6,11 +6,15 @@ const initialState: Team = {
   team_image: "",
   players: [],
 };
-const teamFormSlice = createSlice({
-  name: "teamForm",
+const teamEditFormSlice = createSlice({
+  name: "teamEditForm",
   initialState,
   reducers: {
-    setTeamName: (state, action: PayloadAction<string>) => {
+    loadTeam: (state, action: PayloadAction<Team>) => {
+      state.team_name = action.payload.team_name;
+      state.players = action.payload.players;
+    },
+    changeTeamName: (state, action: PayloadAction<string>) => {
       state.team_name = action.payload;
     },
     addPlayer: (state, action: PayloadAction<Player>) => {
@@ -22,8 +26,13 @@ const teamFormSlice = createSlice({
         state.players.push(action.payload);
       }
     },
-    addImage: (state, action: PayloadAction<string>) => {
-      state.team_image = action.payload;
+    editPlayer: (state, action: PayloadAction<Player>) => {
+      const index = state.players.findIndex(
+        (player) => player.name === action.payload.name
+      );
+      if (index !== -1) {
+        state.players[index] === action.payload;
+      }
     },
     removePlayer: (state, action: PayloadAction<Player>) => {
       const index = state.players.findIndex(
@@ -33,6 +42,9 @@ const teamFormSlice = createSlice({
         state.players.splice(index, 1);
       }
     },
+    addImage: (state, action: PayloadAction<string>) => {
+      state.team_image = action.payload;
+    },
 
     resetTeamForm: (state) => {
       state.team_name = "";
@@ -40,6 +52,5 @@ const teamFormSlice = createSlice({
     },
   },
 });
-export const { setTeamName, addPlayer, resetTeamForm, removePlayer } =
-  teamFormSlice.actions;
-export default teamFormSlice.reducer;
+export const {} = teamEditFormSlice.actions;
+export default teamEditFormSlice.reducer;

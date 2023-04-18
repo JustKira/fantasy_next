@@ -31,19 +31,21 @@ const Page = () => {
   }
 
   return (
-    <div className="flex h-screen justify-between items-center px-12">
-      <div className="flex flex-col gap-4">
-        <CreateTeamForm />
-        <AddPlayerForm />{" "}
-        <Button
-          onClick={() => {
-            submitTeam();
-          }}
-        >
-          Submit
-        </Button>
+    <div className="flex h-screen justify-center items-center px-12">
+      <div className="flex justify-between w-[75vw]">
+        <div className="flex flex-col gap-4">
+          <CreateTeamForm />
+          <AddPlayerForm />
+          <Button
+            onClick={() => {
+              submitTeam();
+            }}
+          >
+            Submit
+          </Button>
+        </div>
+        <TeamPreview />
       </div>
-      <TeamPreview />
     </div>
   );
 };

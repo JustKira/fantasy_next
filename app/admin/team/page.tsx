@@ -2,6 +2,7 @@
 import Button from "@/components/css/button";
 import { useGetTeamsQuery } from "@/redux/query/teamsApi";
 import { Team } from "@/types";
+import { filterTeamsByName } from "@/utils/HelperFunctions";
 import { numberToText } from "@/utils/MoneyConverter";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -13,16 +14,6 @@ const TeamPage = () => {
   const id = searchParams?.get("id");
 
   const { data: teamsData, isLoading } = useGetTeamsQuery();
-
-  function filterTeamsByName(
-    teamsArray: Team[],
-    inputTeamName: string
-  ): Team | null {
-    const matchingTeams = teamsArray.filter(
-      (team) => team.team_name === inputTeamName
-    );
-    return matchingTeams.length ? matchingTeams[0] : null;
-  }
 
   const RenderTeam = () => {
     if (teamsData?.data.teams && id) {
@@ -69,7 +60,7 @@ const TeamPage = () => {
             <Link href="/admin/teams">Back</Link>
           </Button>
           <Button>
-            <Link href="/admin/team/edit">EDIT</Link>
+            <Link href={`/admin/team/edit?id=${id}`}>EDIT</Link>
           </Button>
         </div>
       </div>

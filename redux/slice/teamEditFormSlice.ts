@@ -31,7 +31,7 @@ const teamEditFormSlice = createSlice({
         (player) => player.name === action.payload.name
       );
       if (index !== -1) {
-        state.players[index] === action.payload;
+        state.players[index] = action.payload;
       }
     },
     removePlayer: (state, action: PayloadAction<Player>) => {
@@ -52,5 +52,5 @@ const teamEditFormSlice = createSlice({
     },
   },
 });
-export const {} = teamEditFormSlice.actions;
+export const { loadTeam, editPlayer } = teamEditFormSlice.actions;
 export default teamEditFormSlice.reducer;

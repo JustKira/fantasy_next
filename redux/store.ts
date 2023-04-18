@@ -2,9 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { profileApi } from "./query/profileApi";
 import { teamsApi } from "./query/teamsApi";
 import teamFormReducer from "./slice/teamFormSlice";
+import teamEditFormReducer from "./slice/teamEditFormSlice";
 export const store = configureStore({
   reducer: {
     teamForm: teamFormReducer,
+    teamEditForm: teamEditFormReducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [teamsApi.reducerPath]: teamsApi.reducer,
     // [adminApi.reducerPath]: adminApi.reducer,

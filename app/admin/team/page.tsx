@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const page = () => {
+const TeamPage = () => {
   const searchParams = useSearchParams();
   const id = searchParams?.get("id");
 
@@ -63,4 +63,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default TeamPage;

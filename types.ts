@@ -10,7 +10,7 @@ export type Roles = "ADMIN" | "USER";
 
 export interface Team {
   team_name: string;
-  team_image: string;
+  team_image?: string;
   players: Array<Player>;
 }
 

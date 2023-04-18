@@ -6,18 +6,21 @@ export const teamsApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/" }),
   tagTypes: ["TEAMS"],
   endpoints: (builder) => ({
-    getTeams: builder.query<{ data: Array<Team> }, void>({
+    getTeams: builder.query<{ data: { teams: Array<Team> } }, void>({
       query: () => ({
         url: "api/teams",
         method: "GET",
       }),
       providesTags: ["TEAMS"],
     }),
-    createUpdateTeam: builder.mutation<Array<Team>, Array<Team>>({
-      query: (teams) => ({
+    createUpdateTeam: builder.mutation<
+      { teams: Array<Team> },
+      { teams: Array<Team> }
+    >({
+      query: (team) => ({
         url: "api/teams",
         method: "POST",
-        body: teams,
+        body: team,
       }),
       invalidatesTags: ["TEAMS"],
     }),

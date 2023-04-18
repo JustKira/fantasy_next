@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { useDispatch } from "react-redux";
 import { setTeamName } from "@/redux/slice/teamFormSlice";
+import Link from "next/link";
 
 const CreateTeamForm = () => {
   const { register, handleSubmit, watch } = useForm<{
@@ -23,8 +24,13 @@ const CreateTeamForm = () => {
   }, [watch]);
   return (
     <>
-      <h1 className="font-black uppercase text-3xl">TEAM</h1>
-      <form onSubmit={onSubmit} className="flex flex-col gap-4">
+      <h1 className="font-black uppercase text-3xl flex justify-between items-baseline">
+        TEAM{" "}
+        <Link className="text-lg font-light" href={"/admin/teams"}>
+          {"< Back"}
+        </Link>
+      </h1>
+      <form onSubmit={onSubmit} className="flex flex-col gap-4 ">
         <Input
           placeholder="team name"
           type="text"

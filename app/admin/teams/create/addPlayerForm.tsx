@@ -1,6 +1,7 @@
 "use client";
 import Input from "@/components/css/Input";
 import Button from "@/components/css/button";
+import Select from "@/components/css/selector";
 import { addPlayer } from "@/redux/slice/teamFormSlice";
 import { Player, lanes } from "@/types";
 import { numberToText, textToNumber } from "@/utils/MoneyConverter";
@@ -9,7 +10,7 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
-const laneOptions: { value: lanes; label: string }[] = [
+export const laneOptions: { value: lanes; label: string }[] = [
   { value: "TOP", label: "Top" },
   { value: "JG", label: "Jungle" },
   { value: "BOT", label: "Bottom" },
@@ -18,10 +19,14 @@ const laneOptions: { value: lanes; label: string }[] = [
 ];
 
 const AddPlayerForm = () => {
-  const { register, handleSubmit, control } = useForm<Player>();
+  const { register, handleSubmit, control } = useForm<Player>({});
 
   const dispatch = useDispatch();
   const onSubmit = handleSubmit((data) => {
+    if (data.otp === "") {
+      data.otp = "N/A";
+    }
+    data.otp = data.otp?.toUpperCase();
     dispatch(addPlayer(data));
   });
 
@@ -37,17 +42,13 @@ const AddPlayerForm = () => {
         type="text"
         {...register("nationality", { required: true })}
       />
-      <Input
-        placeholder="otp"
-        type="text"
-        {...register("otp", { required: true })}
-      />
+      <Input placeholder="otp" type="text" {...register("otp")} />
       <Input
         placeholder="price"
         type="text"
         {...register("price", {
           required: true,
-          setValueAs: (v) => textToNumber(v),
+          setValueAs: (v: string) => textToNumber(v.toUpperCase()),
         })}
       />
       <Controller
@@ -55,14 +56,14 @@ const AddPlayerForm = () => {
         control={control}
         rules={{ required: true }}
         render={({ field }) => (
-          <select {...field}>
+          <Select {...field}>
             <option value="">Select a lane</option>
             {laneOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
-          </select>
+          </Select>
         )}
       />
       <Button type="submit">Add Player</Button>

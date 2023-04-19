@@ -23,6 +23,7 @@ const initialState: UserTeamSlice = {
       wild_card: 1,
       wild_card_status: false,
     },
+    ballance: 100000000,
   },
 };
 
@@ -41,7 +42,13 @@ const userTeamFormSlice = createSlice({
         state.error = `Player ${action.payload.name} already exists in the team`;
         return;
       }
-
+      if (
+        state.user_team?.ballance &&
+        state.user_team?.ballance < action.payload.price
+      ) {
+        state.error = `You don't have enough balance to buy ${action.payload.name}`;
+        return;
+      }
       const teamCount = state.user_team.user_team.filter(
         (p) => p && p.team_name === action.payload.team_name
       ).length;
@@ -49,16 +56,33 @@ const userTeamFormSlice = createSlice({
         state.error = `You can't have more than 2 players from the same team`;
         return;
       }
+
       if (state.selected_card < 5) {
         if (LaneOrder[state.selected_card] === action.payload.lane) {
+          let prevCost = 0;
+          if (state.user_team.user_team[state.selected_card]) {
+            prevCost = state.user_team.user_team[state.selected_card].price;
+          }
+
           state.user_team.user_team[state.selected_card] = action.payload;
+
+          state.user_team.ballance -= action.payload.price - prevCost;
           state.error = "";
-          return;
         }
       } else {
+        let prevCost = 0;
+        if (state.user_team.user_team[state.selected_card]) {
+          prevCost = state.user_team.user_team[state.selected_card].price;
+        }
+
         state.user_team.user_team[state.selected_card] = action.payload;
+        state.user_team.ballance -= action.payload.price - prevCost;
         state.error = "";
       }
+      let playerCost: number = action.payload.price || 0;
+      // if (state.user_team.user_team[state.selected_card]?.name) {
+      //   playerCost += state.user_team.user_team[state.selected_card]?.price || 0;
+      // }
     },
     setSelectedCard: (state, action: PayloadAction<number>) => {
       state.selected_card = action.payload;

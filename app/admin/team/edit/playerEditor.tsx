@@ -29,13 +29,13 @@ export default function PlayerEditor({ player }: { player: Player }) {
         className=" outline-none p-2 border border-gray-200 bg-white drop-shadow-lg"
         placeholder="player name"
         type="text"
-        {...register("name", { required: true })}
+        {...register("name")}
       />
       <input
         className=" outline-none p-2 border border-gray-200 bg-white drop-shadow-lg"
         placeholder="nationality"
         type="text"
-        {...register("nationality", { required: true })}
+        {...register("nationality")}
       />
       <input
         className=" outline-none p-2 border border-gray-200 bg-white drop-shadow-lg"
@@ -54,7 +54,6 @@ export default function PlayerEditor({ player }: { player: Player }) {
       <Controller
         name="lane"
         control={control}
-        rules={{ required: true }}
         render={({ field }) => (
           <select
             className="bg-gray-900 text-white p-1 rounded-none"

@@ -26,7 +26,7 @@ export interface Player {
 export interface UserTeam {
   user_team_name: string;
   user_team: Array<TeamMembers>;
-  ballance?: number;
+  ballance: number;
   transfers?: number;
   overcharge?: number;
   cards: Cards;

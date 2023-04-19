@@ -27,6 +27,7 @@ const PlayerList = () => {
           return v.lane === LaneOrder[selectedIndex];
         });
       }
+      filtered = filtered.sort((a, b) => b.price - a.price);
       return (
         <div className="flex flex-col">
           <div className="relative table-wrp block">

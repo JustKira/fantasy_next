@@ -11,6 +11,7 @@ const PlayerSelector = () => {
   const userTeamForm = useSelector((state: RootState) => state.userTeamForm);
   return (
     <div className="flex flex-col gap-2 w-[50vw] ">
+      <h1>{userTeamForm.user_team.ballance}</h1>
       <div className="flex gap-2">
         {LaneOrder.map((value, id) => {
           return (

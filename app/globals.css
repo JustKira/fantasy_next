@@ -25,3 +25,12 @@ body {
     )
     rgb(var(--background-start-rgb));
 } */
+.table-wrp  {
+  max-height: 70vh;
+  overflow-y: auto;
+  display:block;
+}
+thead{
+  position:sticky;
+  top:0
+}

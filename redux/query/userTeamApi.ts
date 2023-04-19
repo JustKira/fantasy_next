@@ -15,13 +15,13 @@ export const userTeamApi = createApi({
     //   providesTags: ["USERTEAM"],
     // }),
     createUpdateUserTeam: builder.mutation<
-      { UserTeam: UserTeam },
-      { UserTeam: UserTeam }
+      { user_team: UserTeam },
+      { user_team: UserTeam }
     >({
-      query: (UserTeam) => ({
+      query: (user_team) => ({
         url: "api/userTeam",
         method: "POST",
-        body: UserTeam,
+        body: user_team,
       }),
       invalidatesTags: ["USERTEAM"],
     }),

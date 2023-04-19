@@ -49,6 +49,7 @@ export interface TeamMembers {
   price: number;
   otp?: string;
   lane: lanes;
+  team_name: string;
   profile_image?: string;
 }
 type Cards = {

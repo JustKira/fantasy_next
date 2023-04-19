@@ -4,20 +4,24 @@ import { UserTeam } from "@/types";
 import { getServerSession } from "next-auth";
 export async function GET(req: Request) {
   try {
-    const { searchParams } = new URL(req.url);
-    const { userTeamId } = searchParams as any;
-    const query = await FIREBASE_SERVER_STORE.collection("userTeam")
-      .doc(userTeamId)
-      .get();
-    if (query) {
-      const data = query.data();
-      return new Response(JSON.stringify({ data }), {
-        status: 200,
-      });
-    } else {
-      return new Response(JSON.stringify({ data: {} }), {
-        status: 400,
-      });
+    // const { searchParams } = new URL(req.url);
+    // const { userTeamId } = searchParams as any;
+
+    const session = await getServerSession(authOptions);
+    if (session?.user) {
+      const query = await FIREBASE_SERVER_STORE.collection("userTeam")
+        .doc(session?.user.id)
+        .get();
+      if (query) {
+        const data = query.data();
+        return new Response(JSON.stringify({ data }), {
+          status: 200,
+        });
+      } else {
+        return new Response(JSON.stringify({ data: {} }), {
+          status: 400,
+        });
+      }
     }
   } catch (error) {
     return new Response(

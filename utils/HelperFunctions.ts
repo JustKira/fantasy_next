@@ -20,3 +20,20 @@ export function playerLister(teams: Team[]): TeamMembers[] {
 
   return players;
 }
+
+export function arraysEqual(a: TeamMembers[], b: TeamMembers[]) {
+  // If the arrays are different lengths, they can't be the same
+  if (a.length !== b.length) {
+    return false;
+  }
+
+  // Compare each element of the arrays
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] !== b[i]) {
+      return false;
+    }
+  }
+
+  // If all elements are the same, the arrays are equal
+  return true;
+}

@@ -7,13 +7,13 @@ export const userTeamApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/" }),
   tagTypes: ["USERTEAM"],
   endpoints: (builder) => ({
-    // getUserTeam: builder.query<{ data: { teams: Array<Team> } }, void>({
-    //   query: () => ({
-    //     url: "api/teams",
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["USERTEAM"],
-    // }),
+    getUserTeam: builder.query<{ data: { user_team: UserTeam } }, void>({
+      query: () => ({
+        url: "api/userTeam",
+        method: "GET",
+      }),
+      providesTags: ["USERTEAM"],
+    }),
     createUpdateUserTeam: builder.mutation<
       { user_team: UserTeam },
       { user_team: UserTeam }
@@ -28,4 +28,5 @@ export const userTeamApi = createApi({
   }),
 });
 
-export const { useCreateUpdateUserTeamMutation } = userTeamApi;
+export const { useGetUserTeamQuery, useCreateUpdateUserTeamMutation } =
+  userTeamApi;

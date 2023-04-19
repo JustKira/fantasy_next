@@ -11,9 +11,10 @@ export default function AdminDashboardLayout({
     <ProfileRequiredRoutes>
       <div className="flex flex-col min-h-screen items-center px-32">
         <div className="relative w-full bg-endless-white drop-shadow-lg mt-32 pb-12 border border-gray-200 flex flex-col items-center">
-          <div className="sticky top-0 w-full">
+          <div className="w-full">
             <FantasyNavbar />
           </div>
+
           {children}
         </div>
       </div>

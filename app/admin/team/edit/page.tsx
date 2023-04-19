@@ -36,10 +36,12 @@ const EditTeamPage = () => {
   }
 
   const UpdateTeam = () => {
+    console.log(teamCloned);
     const newTeam = teamsData?.data.teams.map((value) => {
       if (
         value.team_name.toLowerCase() === teamCloned.team_name.toLowerCase()
       ) {
+        console.log(teamCloned);
         return teamCloned;
       }
       return value;

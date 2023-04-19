@@ -3,11 +3,15 @@ import { profileApi } from "./query/profileApi";
 import { teamsApi } from "./query/teamsApi";
 import teamFormReducer from "./slice/teamFormSlice";
 import teamEditFormReducer from "./slice/teamEditFormSlice";
+import userTeamFormReducer from "./slice/userTeamFormSlice";
+import teamFormationReducer from "./slice/teamFormationSlice";
 import { userTeamApi } from "./query/userTeamApi";
 export const store = configureStore({
   reducer: {
     teamForm: teamFormReducer,
     teamEditForm: teamEditFormReducer,
+    userTeamForm: userTeamFormReducer,
+    teamFormation: teamFormationReducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [teamsApi.reducerPath]: teamsApi.reducer,
     [userTeamApi.reducerPath]: userTeamApi.reducer,

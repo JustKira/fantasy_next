@@ -1,110 +1,77 @@
 "use client";
-import { useGetTeamsQuery } from '@/redux/query/teamsApi';
-import { useCreateUpdateUserTeamMutation } from '@/redux/query/userTeamApi';
-import { UserTeam, lanes } from '@/types';
-import React, { useState } from 'react';
-  const PlayerList = () => {
-    const { data: teamsData, isLoading } = useGetTeamsQuery();
-    const mappedData = teamsData?.data.teams;
-  
-    const [selectedRect, setSelectedRect] = useState(null);
-    const [rectData, setRectData] = useState([
-      { label: 'TOP', name: '', lane: '', price: '',nationality:"" },
-      { label: 'JG', name: '', lane: '', price: '',nationality:"" },
-      { label: 'MID', name: '', lane: '', price: '',nationality:"" },
-      { label: 'BOT', name: '', lane: '', price: '',nationality:"" },
-      { label: 'SUB', name: '', lane: '', price: '',nationality:"" },
-      { label: 'SUB1', name: '', lane: '', price: '',nationality:"" },
-      { label: 'SUB2', name: '', lane: '', price: '',nationality:"" },
-    ]);
-    const [createUpdateTeam, { isLoading: isSaving }] = useCreateUpdateUserTeamMutation();
-    const handleRectClick = (index:any) => {
-      setSelectedRect(index);
-    };
+import { useGetTeamsQuery } from "@/redux/query/teamsApi";
+import { LaneOrder, setPlayer } from "@/redux/slice/userTeamFormSlice";
+import { RootState } from "@/redux/store";
+import { TeamMembers, lanes } from "@/types";
+import { playerLister } from "@/utils/HelperFunctions";
+import { numberToText } from "@/utils/MoneyConverter";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-    const handlePlayerClick = (player:any) => {
-      if (selectedRect !== null) {
-        // Update the rectangular with the player's data
-        const newRectData = [...rectData];
-        newRectData[selectedRect] = { ...newRectData[selectedRect], name: player.name, lane: player.lane, price: player.price,nationality:player.nationality};
-        setRectData(newRectData);
-        setSelectedRect(null);
+const PlayerList = () => {
+  const { data: teamData, isLoading } = useGetTeamsQuery();
+  const dispatch = useDispatch();
+  const selectedIndex = useSelector(
+    (state: RootState) => state.userTeamForm.selected_card
+  );
+  if (isLoading) {
+    return <>isloading</>;
+  }
+
+  const PlayerLister = () => {
+    if (teamData?.data.teams) {
+      const players = playerLister(teamData?.data.teams);
+      let filtered: TeamMembers[] = players;
+      if (selectedIndex < 5) {
+        filtered = players.filter((v) => {
+          return v.lane === LaneOrder[selectedIndex];
+        });
       }
-    };
-    const handleSaveTeam = async () => {
-      const teamData:any = {
-        user_team_name: 'My Team',
-        user_team: rectData
-    .filter((rect) => rect.name !== '')
-    .map((rect) => {
-      return {
-        name: rect.name,
-        lane: rect.lane as lanes,
-        price: Number(rect.price),
-        nationality: rect.nationality
-      };
-    }),
-      };
-  
-      try {
-        await createUpdateTeam(teamData);
-        
-        console.log('Team data saved successfully!');
-      } catch (error) {
-        console.error('An error occurred while saving team data:', error);
-      }
-    };
-    if(isLoading){
-      return (<>Is Loading...
-      </>)
+      filtered = filtered.sort((a, b) => b.price - a.price);
+      return (
+        <div className="flex flex-col">
+          <div className="relative table-wrp block">
+            <table className="">
+              <thead className="bg-gray-900 text-white border-b sticky top-0">
+                <tr className="">
+                  <th className="px-4 py-2 w-40">Name</th>
+                  <th className="px-4 py-2 w-24">Price</th>
+                  <th className="px-4 py-2 w-16">Nationality</th>
+                  <th className="px-4 py-2 w-24">Team</th>
+                  <th className="px-4 py-2 w-12">Lane</th>
+                </tr>
+              </thead>
+              <tbody className="overflow-y-scroll">
+                {filtered.map((value, id) => (
+                  <tr
+                    key={id}
+                    onClick={() => {
+                      dispatch(setPlayer(value));
+                    }}
+                    className="hover:bg-gray-900 hover:text-white h-14"
+                  >
+                    <td className="border px-4 ">{value.name}</td>
+                    <td className="border px-4 ">
+                      {numberToText(value.price)}
+                    </td>
+                    <td className="border px-4 ">{value.nationality}</td>
+                    <td className="border px-4 ">{value.team_name}</td>
+                    <td className="border px-4 ">{value.lane}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      );
     }
-    return (
-      <div className="flex gap-4">
-        {/* Rectangular */}
-        <div className="flex flex-col gap-4">
-          {rectData.map((rect, index) => (
-            <div
-              key={rect.label}
-              className={`w-32 h-32 bg-gray-300 text-gray-500 rounded-lg flex items-center justify-center ${
-                selectedRect === index ? 'bg-blue-500 text-white' : ''
-              }`}
-              onClick={() => handleRectClick(index)}
-              style={{ cursor: 'pointer' }}
-            >
-              {rect.name ? (
-                <>
-                  <div className="font-bold">{rect.name}</div>
-                </>
-              ) : (
-                <div>{rect.label}</div>
-              )}
-            </div>
-          ))}
-        </div>
-        {/* Player list */}
-        <div className="flex-1 flex flex-col gap-4 mt-11" style={{ justifyContent: 'flex-end' }}>
-          {mappedData && mappedData.flatMap((team) => (
-            team.players.map((player) => (
-              <div
-                key={player.name}
-                className="bg-white shadow rounded-lg p-4 flex items-center gap-2"
-                onClick={() => handlePlayerClick(player)}
-                style={{ cursor: 'pointer' }}
-              >
-                <div className="font-bold">{player.name}</div>
-                <div className="text-gray-500">{player.lane}</div>
-                <div className="font-bold">${player.price}</div>
-                <div className="text-gray-500">{team.team_name}</div>
-              </div>
-            ))
-          ))}
-        </div>
-        <button type="button" onClick={handleSaveTeam} disabled={isSaving} className="bg-blue-500 text-white rounded-lg p-2 mt-4">
-          {isSaving ? 'Saving...' : 'Save Team'}
-        </button>
-      </div>
-    );
+    return <>Error</>;
   };
+  return (
+    <div className="bg-white drop-shadow-xl">
+      <PlayerLister />
+    </div>
+  );
+};
 
-
-export default PlayerList
+export default PlayerList;

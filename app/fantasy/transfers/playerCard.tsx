@@ -1,11 +1,16 @@
 "use client";
-import { LaneOrder, setPlayersBalance, setSelectedCard } from "@/redux/slice/userTeamFormSlice";
+import {
+  LaneOrder,
+  setPlayersBalance,
+  setSelectedCard,
+} from "@/redux/slice/userTeamFormSlice";
 import React, { useEffect } from "react";
 import PlayerCard from "./playerCard";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import TeamMemberRenderer from "@/utils/TeamMemberRenderer";
 import { useGetUserTeamQuery } from "@/redux/query/userTeamApi";
+import { numberToText } from "@/utils/MoneyConverter";
 
 const PlayerSelector = () => {
   const dispatch = useDispatch();
@@ -19,10 +24,10 @@ const PlayerSelector = () => {
   if (isLoading) {
     return <>isloading</>;
   }
-  const players=userTeamForm.user_team.user_team.slice(0, 5)
+  const players = userTeamForm.user_team.user_team.slice(0, 5);
   return (
     <div className="flex flex-col gap-2 w-[50vw] ">
-      <h1>{userTeamForm.user_team.ballance}</h1>
+      <h1>{numberToText(userTeamForm.user_team.ballance)}</h1>
       <div className="flex gap-2">
         {players?.map((value, id) => {
           return (
@@ -44,9 +49,9 @@ const PlayerSelector = () => {
                   teamMember={players[id]}
                 />
               )} */}
-               <TeamMemberRenderer
-                  teamMember={userTeamForm.user_team.user_team[id]}
-                />
+              <TeamMemberRenderer
+                teamMember={userTeamForm.user_team.user_team[id]}
+              />
             </div>
           );
         })}
@@ -65,11 +70,13 @@ const PlayerSelector = () => {
               teamMember={userTeamForm.user_team.user_team[5]}
             />
           ) : (
-            <>(
+            <>
+              (
               <TeamMemberRenderer
                 teamMember={userTeamForm.user_team.user_team[5] as any}
               />
-            )</>
+              )
+            </>
           )}
         </div>
         <div

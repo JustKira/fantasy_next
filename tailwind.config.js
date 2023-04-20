@@ -13,6 +13,8 @@ module.exports = {
       },
       backgroundImage: {
         "endless-white": "url(/seamless-bg-white.png)",
+        w1: "url(/w1.jpg)",
+        w2: "url(/w2.jpg)",
         "lol-map": "url(/lolmap.jpg)",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",

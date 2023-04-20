@@ -1,5 +1,5 @@
 import { UserTeam, TeamMembers, Player } from "@/types";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 
 interface UserTeamSlice {
   error: string;
@@ -61,15 +61,70 @@ const userTeamFormSlice = createSlice({
         state.error = `You can't have more than 2 players from the same team`;
         return;
       }
+      // if (state.selected_card < 5) {
+      //   if (LaneOrder[state.selected_card] === action.payload.lane) {
+      //     const updatedUserTeam = [...state.user_team.user_team];
+      //     let prevCost = 0;
+      //     if (updatedUserTeam[state.selected_card]) {
+      //       prevCost = updatedUserTeam[state.selected_card].price;
+      //     }
+      //     updatedUserTeam[state.selected_card] = action.payload;
 
+      //     // Update the balance
+      //     const updatedBalance =
+      //       state.user_team.ballance - (action.payload.price - prevCost);
+
+      //     return {
+      //       ...state,
+      //       user_team: {
+      //         ...state.user_team,
+      //         user_team: updatedUserTeam,
+      //         ballance: updatedBalance,
+      //       },
+      //       error: "",
+      //     };
+      //   }
+      // } else {
+      //   const updatedUserTeam = [...state.user_team.user_team];
+      //   let prevCost = 0;
+      //   if (updatedUserTeam[state.selected_card]) {
+      //     prevCost = updatedUserTeam[state.selected_card].price;
+      //   }
+      //   updatedUserTeam[state.selected_card] = action.payload;
+
+      //   // Update the balance
+      //   const updatedBalance =
+      //     state.user_team.ballance - (action.payload.price - prevCost);
+
+      //   return {
+      //     ...state,
+      //     user_team: {
+      //       ...state.user_team,
+      //       user_team: updatedUserTeam,
+      //       ballance: updatedBalance,
+      //     },
+      //     error: "",
+      //   };
+      // }
       if (state.selected_card < 5) {
         if (LaneOrder[state.selected_card] === action.payload.lane) {
           let prevCost = 0;
           if (state.user_team.user_team[state.selected_card]) {
             prevCost = state.user_team.user_team[state.selected_card].price;
           }
-
-          state.user_team.user_team[state.selected_card] = action.payload;
+          // state.user_team.user_team[state.selected_card] = action.payload;
+          state.user_team.user_team[state.selected_card].lane =
+            action.payload.lane;
+          state.user_team.user_team[state.selected_card].name =
+            action.payload.name;
+          state.user_team.user_team[state.selected_card].nationality =
+            action.payload.nationality;
+          state.user_team.user_team[state.selected_card].price =
+            action.payload.price;
+          state.user_team.user_team[state.selected_card].team_name =
+            action.payload.team_name;
+          state.user_team.user_team[state.selected_card].otp =
+            action.payload.otp;
           if (state.selected_card === 0) {
             state.user_team.user_team[7] = action.payload;
           }
@@ -81,11 +136,16 @@ const userTeamFormSlice = createSlice({
         if (state.user_team.user_team[state.selected_card]) {
           prevCost = state.user_team.user_team[state.selected_card].price;
         }
-
         state.user_team.user_team[state.selected_card] = action.payload;
+
         state.user_team.ballance -= action.payload.price - prevCost;
         state.error = "";
       }
+      let playerCost: number = action.payload.price || 0;
+      // if (state.user_team.user_team[state.selected_card]?.name) {
+      //   playerCost += state.user_team.user_team[state.selected_card]?.price || 0;
+      // }
+      state.user_team.user_team[state.selected_card] = action.payload;
     },
     setSelectedCard: (state, action: PayloadAction<number>) => {
       state.selected_card = action.payload;
@@ -93,8 +153,15 @@ const userTeamFormSlice = createSlice({
     setUserTeamName: (state, action: PayloadAction<string>) => {
       state.user_team.user_team_name = action.payload;
     },
+    setPlayersBalance: (state, action: PayloadAction<UserTeam>) => {
+      state.user_team = action.payload;
+    },
   },
 });
-export const { setSelectedCard, setPlayer, setUserTeamName } =
-  userTeamFormSlice.actions;
+export const {
+  setSelectedCard,
+  setPlayer,
+  setUserTeamName,
+  setPlayersBalance,
+} = userTeamFormSlice.actions;
 export default userTeamFormSlice.reducer;

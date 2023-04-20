@@ -43,6 +43,7 @@ const userTeamFormSlice = createSlice({
         return;
       }
       let prevCost = 0;
+
       if (state.user_team.user_team[state.selected_card]) {
         prevCost = state.user_team.user_team[state.selected_card].price;
       }
@@ -85,10 +86,6 @@ const userTeamFormSlice = createSlice({
         state.user_team.ballance -= action.payload.price - prevCost;
         state.error = "";
       }
-      let playerCost: number = action.payload.price || 0;
-      // if (state.user_team.user_team[state.selected_card]?.name) {
-      //   playerCost += state.user_team.user_team[state.selected_card]?.price || 0;
-      // }
     },
     setSelectedCard: (state, action: PayloadAction<number>) => {
       state.selected_card = action.payload;

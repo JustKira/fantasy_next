@@ -1,9 +1,9 @@
-import HeroSection from './heroSection';
+import HeroSection from "./heroSection";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
-      <HeroSection/>
+      <HeroSection />
     </main>
-  )
+  );
 }

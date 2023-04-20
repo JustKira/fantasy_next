@@ -31,7 +31,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${poppins.variable} ${lizz.variable}`}>
-      <body className="font-poppins bg-endless-white">
+      <body className="bg-endless-white font-poppins">
         <ProvidersWrapper>
           <Navbar />
           {children}

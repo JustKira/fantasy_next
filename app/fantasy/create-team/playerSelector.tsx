@@ -66,7 +66,9 @@ const PlayerSelector = () => {
           ) : (
             <div className="flex">
               {LaneOrder.map((value, id) => {
-                return <img className="w-4" src={`/icons/${value}.png`} />;
+                return (
+                  <img key={id} className="w-4" src={`/icons/${value}.png`} />
+                );
               })}
             </div>
           )}
@@ -93,7 +95,9 @@ const PlayerSelector = () => {
           ) : (
             <div className="flex">
               {LaneOrder.map((value, id) => {
-                return <img className="w-4" src={`/icons/${value}.png`} />;
+                return (
+                  <img key={id} className="w-4" src={`/icons/${value}.png`} />
+                );
               })}
             </div>
           )}

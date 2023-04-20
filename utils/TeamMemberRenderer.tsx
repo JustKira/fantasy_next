@@ -6,6 +6,7 @@ const TeamMemberRenderer = ({ teamMember }: { teamMember: TeamMembers }) => {
   return (
     <div className="flex flex-col">
       <h1>{teamMember?.name}</h1>
+      <h1>{teamMember?.team_name}</h1>
       <h1>{numberToText(teamMember?.price)}</h1>
     </div>
   );

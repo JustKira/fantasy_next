@@ -21,17 +21,11 @@ const Page = () => {
   const [createTeam, { isSuccess, isLoading: isSending }] =
     useCreateUpdateUserTeamMutation();
 
-  useEffect(() => {
-    if (isSuccess) {
-      router.push("/fantasy");
-    }
-  }, [isSuccess]);
-
   if (isLoading) {
     return <>loading</>;
   }
   function createUserTeam() {
-    if (userTeam.user_team_name != "") createTeam({ user_team: userTeam });
+    createTeam({ user_team: userTeam });
   }
   return (
     <>

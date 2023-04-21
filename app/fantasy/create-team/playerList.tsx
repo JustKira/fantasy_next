@@ -17,7 +17,6 @@ const PlayerList = () => {
   if (isLoading) {
     return <>isloading</>;
   }
-
   const PlayerLister = () => {
     if (teamData?.data.teams) {
       const players = playerLister(teamData?.data.teams);

@@ -11,7 +11,6 @@ import { loadTeamFormation } from "@/redux/slice/teamFormationSlice";
 import OnDeck from "./onDeck";
 import { RootState } from "../../../redux/store";
 import Button from "@/components/css/button";
-import { user } from "firebase-functions/v1/auth";
 import { UserTeam } from "@/types";
 import { arraysEqual } from "@/utils/HelperFunctions";
 

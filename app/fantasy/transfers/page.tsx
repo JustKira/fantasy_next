@@ -11,7 +11,7 @@ import { useCreateUpdateUserTeamMutation, useGetUserTeamQuery } from '@/redux/qu
 const Page = () => {
     const router = useRouter();
     const userTeam = useSelector(
-      (state: RootState) => state.userTeamForm.user_team
+      (state: RootState) => state.userTeamForm
     );
   
     const { data: userTeamData, isLoading } = useGetUserTeamQuery();
@@ -28,7 +28,19 @@ const Page = () => {
       return <>loading</>;
     }
     function createUserTeam() {
-        if (userTeam.user_team_name != "") createTeam({ user_team: userTeam });
+      let transfers=0
+
+      let overcharge=0
+      if(userTeam.transfersMade>=userTeam.user_team.transfers){
+        transfers=0
+
+      if(userTeamData?.data.user_team.overcharge){
+        overcharge=userTeam.transfersMade-userTeam.user_team.transfers+userTeamData.data.user_team.overcharge
+      }
+      }else{
+        transfers=userTeam.user_team.transfers-userTeam.transfersMade
+      }
+        if (userTeam.user_team.user_team_name != "") createTeam({ user_team: {...userTeam.user_team,transfers,overcharge,} });
       }
     return (
         <>

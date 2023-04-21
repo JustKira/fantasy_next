@@ -27,7 +27,7 @@ export interface UserTeam {
   user_team_name: string;
   user_team: Array<TeamMembers>;
   ballance: number;
-  transfers?: number;
+  transfers: number;
   overcharge?: number;
   cards: Cards;
   total_points?: number;

@@ -64,51 +64,6 @@ const userTeamFormSlice = createSlice({
         state.error = `You can't have more than 2 players from the same team`;
         return;
       }
-      // if (state.selected_card < 5) {
-      //   if (LaneOrder[state.selected_card] === action.payload.lane) {
-      //     const updatedUserTeam = [...state.user_team.user_team];
-      //     let prevCost = 0;
-      //     if (updatedUserTeam[state.selected_card]) {
-      //       prevCost = updatedUserTeam[state.selected_card].price;
-      //     }
-      //     updatedUserTeam[state.selected_card] = action.payload;
-
-      //     // Update the balance
-      //     const updatedBalance =
-      //       state.user_team.ballance - (action.payload.price - prevCost);
-
-      //     return {
-      //       ...state,
-      //       user_team: {
-      //         ...state.user_team,
-      //         user_team: updatedUserTeam,
-      //         ballance: updatedBalance,
-      //       },
-      //       error: "",
-      //     };
-      //   }
-      // } else {
-      //   const updatedUserTeam = [...state.user_team.user_team];
-      //   let prevCost = 0;
-      //   if (updatedUserTeam[state.selected_card]) {
-      //     prevCost = updatedUserTeam[state.selected_card].price;
-      //   }
-      //   updatedUserTeam[state.selected_card] = action.payload;
-
-      //   // Update the balance
-      //   const updatedBalance =
-      //     state.user_team.ballance - (action.payload.price - prevCost);
-
-      //   return {
-      //     ...state,
-      //     user_team: {
-      //       ...state.user_team,
-      //       user_team: updatedUserTeam,
-      //       ballance: updatedBalance,
-      //     },
-      //     error: "",
-      //   };
-      // }
       if (state.selected_card < 5) {
         if (LaneOrder[state.selected_card] === action.payload.lane) {
           let prevCost = 0;
@@ -128,7 +83,7 @@ const userTeamFormSlice = createSlice({
             action.payload.team_name;
           state.user_team.user_team[state.selected_card].otp =
             action.payload.otp;
-          
+
           if (state.selected_card === 0) {
             state.user_team.user_team[7] = action.payload;
           }

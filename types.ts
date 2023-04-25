@@ -21,7 +21,7 @@ export interface Player {
   otp?: string;
   lane: lanes;
   profile_image?: string;
-  stats?: Stats;
+  stats?: Array<Stats>;
 }
 export interface UserTeam {
   user_team_name: string;

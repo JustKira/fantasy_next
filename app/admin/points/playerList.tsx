@@ -17,7 +17,13 @@ const TeamPage = () => {
       }
     }));
   }
-
+  let playersCount=0
+  teamData?.data.teams.map((e)=>{
+    return  playersCount+=e.players.length})
+  let isDisabled=false
+ Object.values(stats).map((e)=>{
+    if(!(e.assist && e.cs && e.death && e.kill && e.ward &&Object.values(stats).length===playersCount))isDisabled=true
+  })
   async function handleSubmit() {
     const updatedTeams: Team[] = [];
     teamData?.data.teams.forEach(team => {
@@ -28,8 +34,7 @@ const TeamPage = () => {
         newStats = [...player.stats] || []; // create a copy of the array
         }
         if(playerStats)playerStats.points=2*playerStats.kill-2*playerStats.death+Math.round(playerStats.ward/40)+Math.round (playerStats.cs/100)+playerStats.assist
-        newStats.push(playerStats);
-        console.log(playerStats,newStats)
+        newStats?.push(playerStats);
         return {
           ...player,
           stats: newStats,
@@ -39,8 +44,7 @@ const TeamPage = () => {
     });
     await createUpdateTeam({ teams: updatedTeams });
   }
-  
-  console.log(isLoading,teamData)
+
   if (isLoading) {
 
     return <div className="h-screen flex items-center justify-center">Loading...</div>;
@@ -134,9 +138,18 @@ const TeamPage = () => {
           </div>
         </div>
       ))}
-<button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+<button
+  onClick={handleSubmit}
+  className={`py-2 px-4 rounded font-bold text-white ${
+    isDisabled
+      ? 'bg-gray-400 cursor-not-allowed'
+      : 'bg-blue-500 hover:bg-blue-700'
+  }`}
+  disabled={isDisabled}
+>
   Submit
 </button>
+
     </div>
   );
   

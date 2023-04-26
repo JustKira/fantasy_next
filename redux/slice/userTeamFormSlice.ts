@@ -5,14 +5,18 @@ interface UserTeamSlice {
   error: string;
   selected_card: number;
   user_team: UserTeam;
+  transfersMade: number;
 }
 
 const initialState: UserTeamSlice = {
   error: "",
   selected_card: 0,
+  transfersMade: 0,
   user_team: {
     user_team_name: "",
     user_team: [],
+    transfers: 2,
+    overcharge: 0,
     cards: {
       triple_captin: 1,
       triple_captin_status: false,
@@ -68,7 +72,9 @@ const userTeamFormSlice = createSlice({
           if (updatedUserTeam[state.selected_card]) {
             prevCost = updatedUserTeam[state.selected_card].price;
           }
+
           updatedUserTeam[state.selected_card] = action.payload;
+
           if (state.selected_card === 0) {
             updatedUserTeam[7] = action.payload;
           }
@@ -119,8 +125,22 @@ const userTeamFormSlice = createSlice({
     setUserTeamName: (state, action: PayloadAction<string>) => {
       state.user_team.user_team_name = action.payload;
     },
-    setPlayersBalance: (state, action: PayloadAction<UserTeam>) => {
+    loadTeam: (state, action: PayloadAction<UserTeam>) => {
       state.user_team = action.payload;
+    },
+    setTransfers: (
+      state,
+      action: PayloadAction<{
+        updatedTeam: TeamMembers[];
+        oldTeam: UserTeam;
+      }>
+    ) => {
+      const uniqueElements = new Set([
+        ...action.payload.updatedTeam.slice(0, 7).map((e) => e.name),
+        ...action.payload.oldTeam.user_team.slice(0, 7).map((e) => e.name),
+      ]);
+      const count = uniqueElements.size - 7;
+      state.transfersMade = count;
     },
   },
 });
@@ -128,6 +148,7 @@ export const {
   setSelectedCard,
   setPlayer,
   setUserTeamName,
-  setPlayersBalance,
+  loadTeam,
+  setTransfers,
 } = userTeamFormSlice.actions;
 export default userTeamFormSlice.reducer;

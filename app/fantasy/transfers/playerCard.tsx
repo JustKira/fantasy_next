@@ -1,9 +1,7 @@
 "use client";
-import {
-  LaneOrder,
-  setPlayersBalance,
-  setSelectedCard,
-} from "@/redux/slice/userTeamFormSlice";
+
+import { LaneOrder, loadTeam, setSelectedCard, setTransfers } from "@/redux/slice/userTeamFormSlice";
+
 import React, { useEffect } from "react";
 import PlayerCard from "./playerCard";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,18 +14,28 @@ const PlayerSelector = () => {
   const dispatch = useDispatch();
   const { data: teamData, isLoading } = useGetUserTeamQuery();
   const userTeamForm = useSelector((state: RootState) => state.userTeamForm);
+  let transferWarning=false
   useEffect(() => {
     if (teamData) {
-      dispatch(setPlayersBalance(teamData.data.user_team));
+      dispatch(loadTeam(teamData.data.user_team));
     }
   }, [dispatch, teamData]);
+  useEffect(() => {
+    if(teamData?.data.user_team){
+      dispatch(setTransfers({updatedTeam:userTeamForm.user_team.user_team,oldTeam: teamData.data.user_team}))
+      }
+  }, [dispatch, teamData,userTeamForm]);
+
   if (isLoading) {
     return <>isloading</>;
   }
-  const players = userTeamForm.user_team.user_team.slice(0, 5);
+
+if(userTeamForm.transfersMade>userTeamForm.user_team.transfers)transferWarning=true
+  const players=userTeamForm.user_team.user_team.slice(0, 5)
   return (
     <div className="flex flex-col gap-2 w-[50vw] ">
-      <h1>{numberToText(userTeamForm.user_team.ballance)}</h1>
+      <h1>{userTeamForm.user_team.ballance}</h1>
+      {transferWarning && <h1 className={"text-red-600"}>{`Reached Maxmuim Transfers -4 points for more transfers(-${(userTeamForm.transfersMade-userTeamForm.user_team.transfers)*4} Points)`}</h1>}
       <div className="flex gap-2">
         {players?.map((value, id) => {
           return (

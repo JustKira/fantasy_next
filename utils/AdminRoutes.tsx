@@ -13,8 +13,8 @@ const AdminRoutes = ({ children }: { children: React.ReactNode }) => {
   if (isLoading) {
     return <>Loading</>;
   }
-
-  if (profile?.data.role === "ADMIN") {
+  console.log(profile);
+  if (profile?.data?.role === "ADMIN") {
     return <>{children}</>;
   }
 

@@ -1,9 +1,12 @@
 "use client";
 import { useGetProfileQuery } from "@/redux/query/profileApi";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
 const ProfileRequiredRoutes = ({ children }: { children: React.ReactNode }) => {
+  const { status } = useSession();
+
   const {
     data: profile,
     isError,
@@ -15,7 +18,17 @@ const ProfileRequiredRoutes = ({ children }: { children: React.ReactNode }) => {
     return <>Loading</>;
   }
 
-  if (profile) {
+  if (status === "unauthenticated") {
+    return (
+      <Link
+        href={"api/auth/signin"}
+        className="flex items-center justify-center h-screen font-black text-6xl"
+      >
+        SIGN IN
+      </Link>
+    );
+  }
+  if (profile?.data) {
     return <>{children}</>;
   }
 

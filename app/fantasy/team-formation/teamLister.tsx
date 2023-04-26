@@ -10,7 +10,7 @@ const TeamLister = () => {
   const dispatch = useDispatch();
   return (
     <>
-      {teamData.players.slice(0, 5).map((values, id) => {
+      {teamData?.players?.slice(0, 5).map((values, id) => {
         return (
           <div
             onClick={() => {
@@ -28,7 +28,7 @@ const TeamLister = () => {
             </div>
 
             <div className="">
-              {teamData.players[7].name === values.name ? (
+              {teamData?.players[7]?.name === values.name ? (
                 <h1 className="font-bold uppercase text-3xl text-[#f9ce3f] drop-shadow-md transition-color duration-200">
                   Captain
                 </h1>

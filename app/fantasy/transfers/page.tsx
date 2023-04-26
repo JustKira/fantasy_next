@@ -1,12 +1,15 @@
 "use client";
-import React, { useEffect } from 'react'
-import PlayerList from '../create-team/playerList'
-import PlayerCard from './playerCard'
-import Button from '@/components/css/button';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
-import { useRouter } from 'next/navigation';
-import { useCreateUpdateUserTeamMutation, useGetUserTeamQuery } from '@/redux/query/userTeamApi';
+import React, { useEffect } from "react";
+import PlayerList from "../create-team/playerList";
+import PlayerCard from "./playerCard";
+import Button from "@/components/css/button";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { useRouter } from "next/navigation";
+import {
+  useCreateUpdateUserTeamMutation,
+  useGetUserTeamQuery,
+} from "@/redux/query/userTeamApi";
 
 const Page = () => {
     const router = useRouter();
@@ -50,11 +53,11 @@ const Page = () => {
                     <Button disabled={isLoading} onClick={() => createUserTeam()}>
             {isSending ? "LOADING" : "SUBMIT"}
           </Button>
-                </div>
-                <PlayerList />
-            </div>
-        </>
-    )
-}
+        </div>
+        <PlayerList />
+      </div>
+    </>
+  );
+};
 
-export default Page
+export default Page;

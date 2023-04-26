@@ -47,6 +47,7 @@ const userTeamFormSlice = createSlice({
         return;
       }
       let prevCost = 0;
+
       if (state.user_team.user_team[state.selected_card]) {
         prevCost = state.user_team.user_team[state.selected_card].price;
       }

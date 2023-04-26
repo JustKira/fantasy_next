@@ -7,8 +7,16 @@ const Navbar = () => {
   const { data: profileData } = useGetProfileQuery();
 
   return (
-    <nav className="fixed flex justify-between items-start top-0 w-full bg-endless-white drop-shadow-md p-4 text-black z-50">
-      <div>LOGO</div>
+    <nav className="fixed flex justify-between items-start top-0 w-full bg-transparent drop-shadow-md p-4 text-black z-50">
+      <div>
+        <Link
+          className=" flex flex-col justify-start font-bold uppercase text-[0.75rem]"
+          href={"/"}
+        >
+          <h1> FANTASY</h1>
+          <h1 className="font-light"> ARABIAN LEAGUE</h1>
+        </Link>
+      </div>
       <ul className="flex gap-2 uppercase">
         {profileData?.data?.role === "ADMIN" ? (
           <li>

@@ -1,11 +1,14 @@
 "use client";
+
 import { LaneOrder, loadTeam, setSelectedCard, setTransfers } from "@/redux/slice/userTeamFormSlice";
+
 import React, { useEffect } from "react";
 import PlayerCard from "./playerCard";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import TeamMemberRenderer from "@/utils/TeamMemberRenderer";
 import { useGetUserTeamQuery } from "@/redux/query/userTeamApi";
+import { numberToText } from "@/utils/MoneyConverter";
 
 const PlayerSelector = () => {
   const dispatch = useDispatch();
@@ -54,9 +57,9 @@ if(userTeamForm.transfersMade>userTeamForm.user_team.transfers)transferWarning=t
                   teamMember={players[id]}
                 />
               )} */}
-               <TeamMemberRenderer
-                  teamMember={userTeamForm.user_team.user_team[id]}
-                />
+              <TeamMemberRenderer
+                teamMember={userTeamForm.user_team.user_team[id]}
+              />
             </div>
           );
         })}
@@ -75,11 +78,13 @@ if(userTeamForm.transfersMade>userTeamForm.user_team.transfers)transferWarning=t
               teamMember={userTeamForm.user_team.user_team[5]}
             />
           ) : (
-            <>(
+            <>
+              (
               <TeamMemberRenderer
                 teamMember={userTeamForm.user_team.user_team[5] as any}
               />
-            )</>
+              )
+            </>
           )}
         </div>
         <div

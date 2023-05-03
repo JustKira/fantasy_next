@@ -64,6 +64,7 @@ type Cards = {
 };
 type PlayerPoints = {
   week: number;
+  player_name: string;
   kill: number;
   death: number;
   assist: number;

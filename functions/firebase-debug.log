@@ -1,0 +1,14 @@
+[debug] [2023-05-03T17:52:18.039Z] ----------------------------------------------------------------------
+[debug] [2023-05-03T17:52:18.043Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\El-Wattaneya\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2023-05-03T17:52:18.045Z] CLI Version:   11.29.1
+[debug] [2023-05-03T17:52:18.045Z] Platform:      win32
+[debug] [2023-05-03T17:52:18.046Z] Node Version:  v16.18.0
+[debug] [2023-05-03T17:52:18.048Z] Time:          Wed May 03 2023 19:52:18 GMT+0200 (Eastern European Standard Time)
+[debug] [2023-05-03T17:52:18.049Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-05-03T17:52:18.230Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-05-03T17:52:18.231Z] > authorizing via signed-in user (mdmedoo7@gmail.com)
+[debug] [2023-05-03T17:52:18.232Z] [iam] checking project fantasy-al for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-05-03T17:52:18.237Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/fantasy-al:testIamPermissions [none]
+[debug] [2023-05-03T17:52:18.237Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/fantasy-al:testIamPermissions x-goog-quota-user=projects/fantasy-al
+[debug] [2023-05-03T17:52:18.237Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/fantasy-al:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}

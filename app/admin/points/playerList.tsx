@@ -2,7 +2,10 @@
 import { useState } from "react";
 import { useGetTeamsQuery, useCreateUpdateTeamMutation } from "@/redux/query/teamsApi";
 import { Team } from "@/types";
-
+import firebase from 'firebase/app';
+import 'firebase/functions';
+import { getFunctions, httpsCallable } from "firebase/functions";
+import Link from "next/link";
 const TeamPage = () => {
   const { data: teamData, isLoading } = useGetTeamsQuery();
   const [stats, setStats] = useState<{ [playerName: string]: { kill?: number, death?: number, assist?: number, cs?: number, ward?: number } }>({});
@@ -33,7 +36,7 @@ const TeamPage = () => {
         if(player.stats){
         newStats = [...player.stats] || []; // create a copy of the array
         }
-        if(playerStats)playerStats.points=2*playerStats.kill-2*playerStats.death+Math.round(playerStats.ward/40)+Math.round (playerStats.cs/100)+playerStats.assist
+        if(playerStats)playerStats.points=2*playerStats.kill-2*playerStats.death+Math.floor(playerStats.ward/40)+Math.floor (playerStats.cs/100)+playerStats.assist
         newStats?.push(playerStats);
         return {
           ...player,
@@ -64,7 +67,7 @@ const TeamPage = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label htmlFor={`${player?.name}-kill`} className="mb-2">
-                      
+
                     </label>
                     <input
                       type="number"
@@ -78,7 +81,7 @@ const TeamPage = () => {
                   </div>
                   <div>
                     <label htmlFor={`${player?.name}-death`} className="mb-2">
-                      
+
                     </label>
                     <input
                       type="number"
@@ -92,7 +95,7 @@ const TeamPage = () => {
                   </div>
                   <div>
                     <label htmlFor={`${player?.name}-assist`} className="mb-2 mt-4">
-                      
+
                     </label>
                     <input
                       type="number"
@@ -106,7 +109,7 @@ const TeamPage = () => {
                   </div>
                   <div>
                     <label htmlFor={`${player?.name}-cs`} className="mb-2 mt-4">
-                      
+
                     </label>
                     <input
                       type="number"
@@ -120,7 +123,7 @@ const TeamPage = () => {
                   </div>
                   <div>
                     <label htmlFor={`${player?.name}-ward`} className="mb-2 mt-4">
-                      
+
                     </label>
                     <input
                       type="number"
@@ -149,9 +152,9 @@ const TeamPage = () => {
 >
   Submit
 </button>
-
+  <Link href={"https://us-central1-fantasy-al.cloudfunctions.net/myRequestFunction"}>testttttttttttt</Link>
     </div>
   );
-  
+
 }
 export default  TeamPage
